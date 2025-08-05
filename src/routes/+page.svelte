@@ -1,56 +1,59 @@
 <script lang="ts">
-	let array = $state([1, 2, 3, 4]);
-	let objectsArray = $state([{ id: 1 }, { id: 2 }]);
-	let object = $state({
-		firstName: 'Ali',
-		lastName: 'Afroze',
-		address: {
-			city: 'City',
-			street: 'Street'
-		}
-	});
+	import Notification from '$lib/components/Notification.svelte';
+	import generateNotifications from '$lib/utils/generate-notifications';
 
-	// $effect(() => {
-	// 	console.log(object);
-	// });
+	let notifications = $state(generateNotifications());
 
-	// $inspect(object).with(console.trace);
-
-	$effect(() => {
-		$inspect.trace();
-		console.log(object.firstName);
-		console.log(object.address.city);
-	});
+	// console.log(generateNotifications());
+	console.log(notifications);
 </script>
 
-{@debug object, array}
-<h1>{object.firstName}</h1>
-<h2>{object.address.city}</h2>
+<ul>
+	<!-- {#each notifications as notification, index}
+		<li>
+			{index}
+			{notification.title}
+		</li>
+	{/each} -->
 
-<input bind:value={object.firstName} />
-<input bind:value={object.address.city} />
-<input bind:value={object.address.street} />
-<p>{array}</p>
-<button
-	onclick={() => {
-		// array.push(Math.round(Math.random() * 10));
-		// array[0] = Math.round(Math.random() * 10);
-		array[1] = Math.round(Math.random() * 10);
-	}}>Add to array</button
->
+	<!-- {#each notifications as { title, body, date }}
+		{@const dateObject = new Date(date)}
+		<li>
+			<h5>{title}</h5>
+			<p>{body}</p>
+			<time datetime={dateObject.toISOString()}>{dateObject.toLocaleDateString()}</time>
+		</li>
+	{:else}
+		<p>no notifications</p>
+	{/each} -->
 
-<button
-	onclick={() => {
-		// console.log(object);
-		console.log($state.snapshot(object));
-	}}
->
-	Log snapshot
-</button>
+	{#each notifications as notification, index}
+		<li>
+			<Notification
+				{notification}
+				onremove={(id) => {
+					// alert(id);
+					notifications.splice(index, 1);
+				}}
+			/>
+		</li>
+	{:else}
+		<p>no notifications</p>
+	{/each}
+</ul>
 
 <style>
 	:global(body) {
 		background-color: #222;
 		color: #fff;
+	}
+
+	ul {
+		list-style: none;
+		padding: 10px;
+		margin: 0;
+		li {
+			margin-bottom: 10px;
+		}
 	}
 </style>
