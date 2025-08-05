@@ -10,34 +10,20 @@
 		}
 	});
 
+	// $effect(() => {
+	// 	console.log(object);
+	// });
+
+	// $inspect(object).with(console.trace);
+
 	$effect(() => {
-		console.log('object effect');
-		console.log(object);
-	});
-	$effect(() => {
-		console.log('object.firstName effect');
+		$inspect.trace();
 		console.log(object.firstName);
-	});
-	$effect(() => {
-		console.log('object.address.city');
 		console.log(object.address.city);
 	});
-	$effect(() => {
-		console.log('array');
-		// console.log(array);
-		console.log(array[0]);
-	});
-	$effect(() => {
-		console.log('array.length');
-		console.log(array.length);
-	});
-
-	// This leads to an infinite loop
-	// $effect(() => {
-	// 	array.push(1);
-	// });
 </script>
 
+{@debug object, array}
 <h1>{object.firstName}</h1>
 <h2>{object.address.city}</h2>
 
@@ -52,6 +38,15 @@
 		array[1] = Math.round(Math.random() * 10);
 	}}>Add to array</button
 >
+
+<button
+	onclick={() => {
+		// console.log(object);
+		console.log($state.snapshot(object));
+	}}
+>
+	Log snapshot
+</button>
 
 <style>
 	:global(body) {
