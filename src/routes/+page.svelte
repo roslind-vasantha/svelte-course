@@ -1,13 +1,21 @@
 <script lang="ts">
+	import Button from '$lib/components/Button.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import generateNotifications from '$lib/utils/generate-notifications';
 
-	let notifications = $state(generateNotifications(3));
+	// let notifications = $state(generateNotifications(3));
+	let notifications = $state.raw(generateNotifications(3));
 
 	// console.log(generateNotifications());
-	// console.log(notifications);
-	$inspect(notifications);
+	console.log(notifications);
+	// $inspect(notifications);
 </script>
+
+<Button
+	onclick={() => {
+		notifications = generateNotifications(3);
+	}}>Refresh</Button
+>
 
 <ul>
 	<!-- {#each notifications as notification, index}
@@ -40,6 +48,8 @@
 					// console.log(
 					// 	$state.snapshot(notifications.filter((notification) => notification.id !== id))
 					// );
+
+					// return $state.snapshot(notifications.filter((notification) => notification.id !== id));
 
 					notifications = $state.snapshot(
 						notifications.filter((notification) => notification.id !== id)

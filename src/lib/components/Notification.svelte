@@ -21,6 +21,7 @@
 </script>
 
 <div class="notification">
+	<!-- <input type="text" bind:value={notification.title} /> -->
 	<h5>{title}</h5>
 	<p>{body}</p>
 	<time datetime={dateObject.toISOString()}>{dateObject.toLocaleDateString()}</time>
