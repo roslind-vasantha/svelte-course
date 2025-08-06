@@ -13,8 +13,11 @@
 
 	let { notification, onremove }: Notification = $props();
 
-	const { title, body, date, id } = notification;
-	const dateObject = new Date(date);
+	// const { title, body, date, id } = notification;
+	// const dateObject = new Date(date);
+
+	const { title, body, date, id } = $derived(notification);
+	const dateObject = $derived(new Date(date));
 </script>
 
 <div class="notification">

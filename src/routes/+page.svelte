@@ -2,10 +2,11 @@
 	import Notification from '$lib/components/Notification.svelte';
 	import generateNotifications from '$lib/utils/generate-notifications';
 
-	let notifications = $state(generateNotifications());
+	let notifications = $state(generateNotifications(3));
 
 	// console.log(generateNotifications());
-	console.log(notifications);
+	// console.log(notifications);
+	$inspect(notifications);
 </script>
 
 <ul>
@@ -27,13 +28,22 @@
 		<p>no notifications</p>
 	{/each} -->
 
-	{#each notifications as notification, index}
+	<!-- {#each notifications as notification, index} -->
+	{#each notifications as notification, index (notification.id)}
 		<li>
 			<Notification
 				{notification}
 				onremove={(id) => {
 					// alert(id);
-					notifications.splice(index, 1);
+					// notifications.splice(index, 1);
+
+					// console.log(
+					// 	$state.snapshot(notifications.filter((notification) => notification.id !== id))
+					// );
+
+					notifications = $state.snapshot(
+						notifications.filter((notification) => notification.id !== id)
+					);
 				}}
 			/>
 		</li>
